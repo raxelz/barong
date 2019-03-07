@@ -31,11 +31,18 @@ class User < ApplicationRecord
   end
 
   def self.find_or_create_from_auth_hash(auth)
+    # binding.pry
     where(email: auth['info']['email']).first_or_initialize.tap do |user|
       user.email = auth['info']['email']
       # Deal with password validation
       user.password = 'HfyljvysqGfhjkm123'
       user.save!
+      # binding.pry
+      # if auth['info']['email_verified']
+      #   user.add_level_label('email')
+      #   user.state = 'active'
+      #   user.level = 1
+      # end
 	  end
   end
 
