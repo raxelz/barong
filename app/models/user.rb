@@ -30,6 +30,15 @@ class User < ApplicationRecord
     self.state == 'active'
   end
 
+  def self.find_or_create_from_auth_hash(auth)
+    where(email: auth['info']['email']).first_or_initialize.tap do |user|
+      user.email = auth['info']['email']
+      # Deal with password validation
+      user.password = 'HfyljvysqGfhjkm123'
+      user.save!
+	  end
+  end
+
   def role
     super.inquiry
   end
